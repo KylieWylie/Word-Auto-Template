@@ -1,0 +1,48 @@
+' A useful little word macro for formatting a file with a template file 
+
+Sub auto_template()
+    Dim file
+    Dim path As String
+    
+    ' ------------- LOGIC -------------
+    ' 1) have empty template file open behind the file we want to format
+    ' 2) select and copy everything on document we want copied to the template
+    ' 3) exit the file we want copied (if the template file was open we are now on the template file)
+    ' 4) paste in the text to the new document (formatting it)
+    ' 5) save the file now formatted by the new template to a folder, keeping the original versions
+    ' 6) exit the current file so nothing is open
+    ' 7) reopen the template file
+    ' 8) recursion dude
+    
+    ' set this to the path of the files that need formatting
+    path = "C:\Users\m1042532\Desktop\cvs\ST\"
+    
+    file = Dir(path & "*.doc")
+    
+    Do While file <> ""
+        Documents.Open FileName:=path & file
+        
+        Selection.WholeStory
+        Selection.Copy
+        ActiveWindow.Close
+        Selection.PasteAndFormat (wdUseDestinationStylesRecovery)
+        
+        ' set this to the path of where you want the formatted files stored
+        formatted_path = "C:\Users\m1042532\Desktop\cvs\STupdated\"
+        
+        ActiveDocument.SaveAs2 FileName:=formatted_path & file, FileFormat:= _
+            wdFormatXMLDocument, LockComments:=False, Password:="", AddToRecentFiles _
+            :=True, WritePassword:="", ReadOnlyRecommended:=False, EmbedTrueTypeFonts _
+            :=False, SaveNativePictureFormat:=False, SaveFormsData:=False, _
+            SaveAsAOCELetter:=False, CompatibilityMode:=15
+        
+        ActiveDocument.Shapes.Range(Array("Text Box 2")).Select
+        ActiveDocument.Shapes.Range(Array("Text Box 2")).Select
+        ActiveDocument.Shapes.Range(Array("Text Box 2")).Select
+        ActiveWindow.Close
+        
+        ' set this to the path of the template file
+        Documents.Open FileName:="C:\Users\m1042532\Desktop\cvs\base.docx"
+        file = Dir()
+    Loop
+End Sub
