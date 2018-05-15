@@ -4,18 +4,24 @@ Sub auto_template()
     Dim file
     Dim path As String
     
-    ' ------------- LOGIC -------------
-    ' 1) have empty template file open behind the file we want to format
-    ' 2) select and copy everything on document we want copied to the template
-    ' 3) exit the file we want copied (if the template file was open we are now on the template file)
-    ' 4) paste in the text to the new document (formatting it)
-    ' 5) save the file now formatted by the new template to a folder, keeping the original versions
+    ' ------------- INSTRUCTIONS -------------
+    ' 1) GO THROUGH THE CODE AND UPDATE THE PATHS BEFORE RUNNING!
+	' 2) have empty template file open behind the file we want to format
+	' 3) open file we want to copy into the template
+	' 4) run the script!
+	
+	' ------------- HOW IT WORKS -------------
+    ' 2) program selects and copies everything on the current document we want copied to the template
+    ' 3) it exits the file we want copied (now we are on the template file)
+    ' 4) pastes in the text to the template file
+    ' 5) saves the new file now formatted by the template to your folder specified beklow (keeping both the original versions)
     ' 6) exit the current file so nothing is open
-    ' 7) reopen the template file
-    ' 8) recursion dude
+    ' 7) reopens the template file
+	' 8) opens the next file to be formatted 
+    ' 8) recursion my dude
     
-    ' set this to the path of the files that need formatting
-    path = "C:\Users\m1042532\Desktop\cvs\ST\"
+    ' set this to the path of the files that need formatting by your template
+    path = "C:\Users\{YOUR PATH HERE}" ' ----------------------------------------------------------- REPLACE ME
     
     file = Dir(path & "*.doc")
     
@@ -28,7 +34,7 @@ Sub auto_template()
         Selection.PasteAndFormat (wdUseDestinationStylesRecovery)
         
         ' set this to the path of where you want the formatted files stored
-        formatted_path = "C:\Users\m1042532\Desktop\cvs\STupdated\"
+        formatted_path = "C:\Users\{YOUR PATH HERE}" ' --------------------------------------------- REPLACE ME
         
         ActiveDocument.SaveAs2 FileName:=formatted_path & file, FileFormat:= _
             wdFormatXMLDocument, LockComments:=False, Password:="", AddToRecentFiles _
@@ -42,7 +48,7 @@ Sub auto_template()
         ActiveWindow.Close
         
         ' set this to the path of the template file
-        Documents.Open FileName:="C:\Users\m1042532\Desktop\cvs\base.docx"
+        Documents.Open FileName:="C:\Users\{YOUR PATH HERE}\{YOUR FILENAME HERE}.docx" ' ----------- REPLACE ME
         file = Dir()
     Loop
 End Sub
